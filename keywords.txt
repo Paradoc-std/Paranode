@@ -1,0 +1,24 @@
+# Syntax Coloring Map For Paranode
+
+# Datatypes (KEYWORD1)
+Paranode	KEYWORD1
+ParanodeWifi	KEYWORD1
+ParanodeWebSocket	KEYWORD1
+ParanodeConnection	KEYWORD1
+
+# Methods and Functions (KEYWORD2)
+begin	KEYWORD2
+connectWifi	KEYWORD2
+connect	KEYWORD2
+isConnected	KEYWORD2
+sendData	KEYWORD2
+onCommand	KEYWORD2
+onConnect	KEYWORD2
+onDisconnect	KEYWORD2
+loop	KEYWORD2
+authenticate	KEYWORD2
+send	KEYWORD2
+disconnect	KEYWORD2
+getIPAddress	KEYWORD2
+
+# Constants (LITERAL1)
