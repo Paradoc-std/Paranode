@@ -16,25 +16,56 @@ ParanodeSocket::ParanodeSocket() : _isConnected(false),
 
 bool ParanodeSocket::connect(const String &url)
 {
-    String protocol = url.substring(0, url.indexOf("://"));
-    String host = url.substring(url.indexOf("://") + 3, url.indexOf("/", url.indexOf("://") + 3));
-    String path = url.substring(url.indexOf("/", url.indexOf("://") + 3));
+    // Optimized URL parsing - avoid multiple String operations
+    const char* urlStr = url.c_str();
+    int urlLen = url.length();
 
-    int port = (protocol == "wss") ? 443 : 80;
-    int colonPos = host.indexOf(":");
-    if (colonPos > 0)
-    {
-        port = host.substring(colonPos + 1).toInt();
-        host = host.substring(0, colonPos);
+    // Find protocol
+    const char* protocolEnd = strstr(urlStr, "://");
+    if (!protocolEnd) return false;
+
+    bool isSecure = (protocolEnd - urlStr == 3 && strncmp(urlStr, "wss", 3) == 0);
+    int port = isSecure ? 443 : 80;
+
+    // Extract host and path
+    const char* hostStart = protocolEnd + 3;
+    const char* pathStart = strchr(hostStart, '/');
+
+    char host[128];
+    char path[256];
+
+    if (pathStart) {
+        int hostLen = pathStart - hostStart;
+        if (hostLen >= sizeof(host)) hostLen = sizeof(host) - 1;
+        strncpy(host, hostStart, hostLen);
+        host[hostLen] = '\0';
+
+        int pathLen = urlLen - (pathStart - urlStr);
+        if (pathLen >= sizeof(path)) pathLen = sizeof(path) - 1;
+        strncpy(path, pathStart, pathLen);
+        path[pathLen] = '\0';
+    } else {
+        int hostLen = urlLen - (hostStart - urlStr);
+        if (hostLen >= sizeof(host)) hostLen = sizeof(host) - 1;
+        strncpy(host, hostStart, hostLen);
+        host[hostLen] = '\0';
+        strcpy(path, "/");
     }
 
-    _socket.begin(host, port, path, (protocol == "wss") ? "wss" : "ws");
+    // Check for port in host
+    char* colonPos = strchr(host, ':');
+    if (colonPos) {
+        *colonPos = '\0';
+        port = atoi(colonPos + 1);
+    }
+
+    _socket.begin(host, port, path, isSecure ? "wss" : "ws");
     _socket.onEvent([this](WStype_t type, uint8_t *payload, size_t length)
                     { this->handleWebSocketEvent(type, payload, length); });
     _socket.setReconnectInterval(5000);
 
     return true;
-};
+}
 
 void ParanodeSocket::disconnect()
 {

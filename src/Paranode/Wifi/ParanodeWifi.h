@@ -31,13 +31,33 @@ public:
     ParanodeWifi();
 
     /**
-     * @brief Connect to WiFi
+     * @brief Connect to WiFi (blocking)
      * @param ssid WiFi SSID
      * @param password WiFi password
      * @param timeout Connection timeout in milliseconds
      * @return True if connection is successful, false otherwise
      */
     bool connect(const char *ssid, const char *password, unsigned long timeout = 30000);
+
+    /**
+     * @brief Start non-blocking WiFi connection
+     * @param ssid WiFi SSID
+     * @param password WiFi password
+     * @return True if connection initiated successfully
+     */
+    bool connectAsync(const char *ssid, const char *password);
+
+    /**
+     * @brief Check connection status for non-blocking connection
+     * @return True if connected, false if still connecting or failed
+     */
+    bool checkConnection();
+
+    /**
+     * @brief Get connection state
+     * @return WiFi connection status
+     */
+    wl_status_t getStatus();
 
     /**
      * @brief Disconnect from WiFi
@@ -58,6 +78,8 @@ public:
 
 private:
     bool _isConnected;
+    bool _isConnecting;
+    unsigned long _connectStartTime;
 };
 
 #endif

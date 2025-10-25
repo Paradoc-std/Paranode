@@ -1,24 +1,105 @@
+#######################################
 # Syntax Coloring Map For Paranode
+#######################################
 
+#######################################
 # Datatypes (KEYWORD1)
+#######################################
+
 Paranode	KEYWORD1
 ParanodeWifi	KEYWORD1
-ParanodeWebSocket	KEYWORD1
+ParanodeSocket	KEYWORD1
 ParanodeConnection	KEYWORD1
+ParanodeJsonBuilder	KEYWORD1
+ParanodeMessageQueue	KEYWORD1
 
+#######################################
 # Methods and Functions (KEYWORD2)
+#######################################
+
+# Core Methods
 begin	KEYWORD2
-connectWifi	KEYWORD2
 connect	KEYWORD2
+connectWifi	KEYWORD2
+connectAsync	KEYWORD2
+checkConnection	KEYWORD2
+disconnect	KEYWORD2
 isConnected	KEYWORD2
+loop	KEYWORD2
+
+# Data Transmission
 sendData	KEYWORD2
+sendStatus	KEYWORD2
+sendError	KEYWORD2
+sendMetrics	KEYWORD2
+sendGeolocation	KEYWORD2
+sendCommandResponse	KEYWORD2
+
+# Configuration
+setDeviceInfo	KEYWORD2
+setMacAddress	KEYWORD2
+setAutoReconnect	KEYWORD2
+setHeartbeatInterval	KEYWORD2
+setBatching	KEYWORD2
+
+# Queue Management
+getQueuedCount	KEYWORD2
+flushQueue	KEYWORD2
+
+# Web Integration
+requestConfig	KEYWORD2
+requestWiFiConfig	KEYWORD2
+requestProjectInfo	KEYWORD2
+updateDeviceStatus	KEYWORD2
+
+# Callbacks
 onCommand	KEYWORD2
 onConnect	KEYWORD2
 onDisconnect	KEYWORD2
-loop	KEYWORD2
-authenticate	KEYWORD2
-send	KEYWORD2
-disconnect	KEYWORD2
-getIPAddress	KEYWORD2
+onOTAUpdate	KEYWORD2
+onOTAProgress	KEYWORD2
+onWiFiConfig	KEYWORD2
+onMessage	KEYWORD2
 
+# Utility Methods
+getUptime	KEYWORD2
+send	KEYWORD2
+getIPAddress	KEYWORD2
+getStatus	KEYWORD2
+authenticate	KEYWORD2
+
+# JSON Builder Methods
+startObject	KEYWORD2
+endObject	KEYWORD2
+addString	KEYWORD2
+addInt	KEYWORD2
+addLong	KEYWORD2
+addULong	KEYWORD2
+addFloat	KEYWORD2
+addDouble	KEYWORD2
+addBool	KEYWORD2
+startNestedObject	KEYWORD2
+getJson	KEYWORD2
+reset	KEYWORD2
+hasSpace	KEYWORD2
+
+# Message Queue Methods
+enqueue	KEYWORD2
+dequeue	KEYWORD2
+peek	KEYWORD2
+isEmpty	KEYWORD2
+isFull	KEYWORD2
+clear	KEYWORD2
+count	KEYWORD2
+batchMessages	KEYWORD2
+removeExpired	KEYWORD2
+getOldestTimestamp	KEYWORD2
+
+#######################################
 # Constants (LITERAL1)
+#######################################
+
+PARANODE_QUEUE_SIZE	LITERAL1
+PARANODE_MAX_MESSAGE_SIZE	LITERAL1
+PARANODE_HEARTBEAT_INTERVAL	LITERAL1
+PARANODE_METRICS_INTERVAL	LITERAL1
